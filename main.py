@@ -4,6 +4,7 @@ import pandas as pd
 
 import math
 # #先不考虑停用词
+import os
 
 #注释：python3没有has_key
 
@@ -16,12 +17,17 @@ def stop_words_list(filepath):
 def get_words_freq(stop_words, sentence1, sentence2):
     #参数：两个文本字符串
     #返回结果：所有词语出现的次数(分别用字典的形式存储)
-    # sentence1 = '应明确表示各出入口与市政道路标高、交通流线及站点之间关系。应与景观竖向设计一致。主要道路应设计公交车站和出租车泊接停靠站。'
-    # sentence2 = '万达广场/万达茂如采用地下室停车，需沿不同方向主要道路设两个或两个以上车库出入口，以分解交通。不宜在商铺前横向设车道出入口。出入口坡道应双进双出，不得做单车道，且净宽不小于8米宜为9米。'
+    #待调参数：var_len = 15  var_sim = 0.1设定两个文本的长度相差var_len以上时相似度为var_sim
     words1 = jieba.cut(sentence1.strip())
     words1 = [word for word in words1]
     words2 = jieba.cut(sentence2.strip())
     words2 = [word for word in words2]
+
+    var_len = 20  
+    var_sim = 0.1
+    if abs(len(words1) - len(words2)) > var_len:
+        return var_sim
+
     #分词之后要进行停用词去除
     for word in words1:
         if word in stop_words:
@@ -29,7 +35,7 @@ def get_words_freq(stop_words, sentence1, sentence2):
     for word in words2:
         if word in stop_words:
             words2.remove(word)
-
+    
     word1_freq_dict = cal_fre(words1)
     word2_freq_dict = cal_fre(words2)
     word1_freq_dict, word2_freq_dict = merge_dict_array(word1_freq_dict, word2_freq_dict)
@@ -206,7 +212,8 @@ def compare(stop_words,lines1, lines2):
             print(similar_sentences)
 
 def test():
-    files = ["暖通.txt", "建筑.txt", "电气.txt", "结构.txt"]
+    file_dir = '总体设计审查要点'
+    files = get_file_names('file_dir')
     stop_words =  stop_words_list("stop_words.txt")
     file_num = len(files)
     append_lines =""
@@ -222,6 +229,30 @@ def test():
 def append_lines(file_path, lines):
     pass
     #输入:文件路径和
+
+def get_file_names(file_dir):   
+    #file_dir为文件夹路径
+    file_names = []
+    for root, dirs, files in os.walk(file_dir):  
+        # print(root) #当前目录路径  
+        # print(dirs) #当前路径下所有子目录  
+        file_names = files
+        # print(files) #当前路径下所有非目录子文件
+        # print("----------------------------------------------------------------------")
+    
+    legal_file_count = 0
+    file_num = len(file_names)
+    for i in range(file_num):
+        if '~$' in file_names[i]:
+            # print("临时文件名是"+file_names[i])
+            file_names.remove(file_names[i])        #删除临时文件
+            continue 
+        file_names[i] = file_dir + "/" + file_names[i]
+        legal_file_count += 1
+    # print("文件总数为"+str(legal_file_count))
+    # print("所有文件名是：")
+    # print(file_names)
+    return file_names
 
 # test()
 sheet_list = [
@@ -245,28 +276,3 @@ read_excel_file("总体设计审查要点/2-商业项目施工图审查要点-�
 
 
 
-    
-# file_path = '1-商业项目施工图审查要点-建筑.xlsx'
-# excel_content = pd.read_excel(io = file_path).values
-# with open('excel.txt', 'w') as f:     # 打开test.txt   如果文件不存在，创建该文件。
-#     f.write(str(excel_content))  # 把变量var写入test.txt。这里var必须是str格式，如果不是，则可以转一下。
-
-
-# with open('excel1.txt', 'w') as f:     # 打开test.txt   如果文件不存在，创建该文件。
-#     f.write(str(check_points))  # 把变量var写入test.txt。这里var必须是str格式，如果不是，则可以转一下。
-
-# a=pd.DataFrame(a)
-# print(a.iloc[:, 3])
-# print(a.iloc[:, 3])
-
-# b=a.iloc[:, [3,4]]
-# print(b)
-# a = a[a[:, 7] > a[:, 8]]
-# data_df = pd.DataFrame(a)
- 
-# data_df.columns = ['单据号','商品编码','商品售价','销售数量','消费金额','消费产生的时间','收银机号','实际收费','消费金额']
-# data_df.index = ['a','b','c','d','e','f','g','h']
- 
-# writer = pd.ExcelWriter('ret.xlsx')
-# data_df.to_excel(writer, 'page_1', index=False)
-# writer.save()

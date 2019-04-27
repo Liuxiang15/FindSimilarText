@@ -59,16 +59,15 @@ def file_name(file_dir):
     #     legal_file_count += 1
     file_num = len(file_names)
     for i in range(file_num):
-        # print(len(file_names))
         if '~$' in file_names[i]:
-            print("临时文件名是"+file_names[i])
+            # print("临时文件名是"+file_names[i])
             file_names.remove(file_names[i])        #删除临时文件
             continue 
         file_names[i] = file_dir + "/" + file_names[i]
         legal_file_count += 1
-    print("文件总数为"+str(legal_file_count))
-    print("所有文件名是：")
-    print(file_names)
+    # print("文件总数为"+str(legal_file_count))
+    # print("所有文件名是：")
+    # print(file_names)
     return file_names
 
 # xl = pd.ExcelFile('总体设计审查要点'+'/'+'10-商业项目施工图审查要点-幕墙.xlsx')
