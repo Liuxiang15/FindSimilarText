@@ -17,7 +17,7 @@ def stop_words_list(filepath):
 def get_words_freq(stop_words, sentence1, sentence2):
     #参数：两个文本字符串
     #返回结果：所有词语出现的次数(分别用字典的形式存储)
-    #待调参数：var_len = 15  var_sim = 0.1设定两个文本的长度相差var_len以上时相似度为var_sim
+    #待调参数：var_len = 0.2  var_sim = 0.1设定两个文本的长度相差较长者的var_len以上时相似度为var_sim
     words1= []
     words2= []
     try:
@@ -28,10 +28,19 @@ def get_words_freq(stop_words, sentence1, sentence2):
     except:
         print(sentence2)
 
-    var_len = 20  
+    max_len = max(len(words1) - len(words2))
+    var_len = 0.2
     var_sim = 0.1
-    if abs(len(words1) - len(words2)) > var_len:
+    # if abs(len(words1) - len(words2)) > var_len:
+    #     return var_sim
+    if abs(len(words1) - len(words2)) > int(max_len*var_len):
         return var_sim
+
+    #因为输入源的不规范，所以特殊处理
+    spe_words = ['审查内容', '修改设计', '审查合格', '一般规定','总体要求']
+    for word in spe_words:
+        if word in sentence1 or word in sentence2:
+            return 0
 
     #分词之后要进行停用词去除
     for word in words1:
@@ -49,9 +58,8 @@ def get_words_freq(stop_words, sentence1, sentence2):
     # print("word2_freq_dict是：-----------------------------")
     # print(word2_freq_dict)
     sim = cal_sim(word1_freq_dict, word2_freq_dict)
-    threshold = 0.7
-    if sim > threshold:
-        print("相似度是"+str(sim))
+    lower_bound = 0.7
+    upper_bound = 0.99
     return sim
 
     
@@ -216,16 +224,18 @@ def read_txt(file_path):
 def compare(stop_words,lines1, lines2):
     #输入：2个字符串数组
     #输出：2个相似得语句集合
-    threshold = 0.7
+    lower_bound = 0.7
+    upper_bound = 0.99
     order = 1   #统计下标从1开始
     for line1 in lines1:
         similar_sentences = []
         for line2 in lines2:
-            if get_words_freq(stop_words,line1, line2) > threshold:
-                similar_sentences.append(line2)
+            sim = get_words_freq(stop_words,line1, line2)
+            if sim > lower_bound and sim < upper_bound:     #排除完全相同的情况
+                similar_sentences.append(line2+"相似率"+str(sim))
         if len(similar_sentences) > 0:
             similar_sentences.append(line1)
-            print("相似度%f以上的语句有----------------------------"%threshold)
+            print("相似度%f以上、%f以下的语句有----------------------------"%(lower_bound, upper_bound))
             print(similar_sentences)
 
             
@@ -282,18 +292,15 @@ def test():
         print("文件个数和对应的表的个数不一致！！！分别是%d和%d"%(len(files), len(sheet_list)))
         return
     
-    # lines1 = read_excel_file('总体设计审查要点/1-商业项目施工图审查要点-建筑.xlsx', sheet_list[0])
-    # print(lines1)
-    lines2 = read_excel_file('总体设计审查要点/5-施工图设计质量管控标准-电气.xlsx', [ '5.1电气'])
-    print(lines2)
-    # compare(stop_words, lines1, lines2)
-    # for i in range(file_num-1):
-    #     for j in range(i+1, file_num):
-    #         lines1 = read_excel_file(files[i], sheet_list[i])
-    #         lines2 = read_excel_file(files[j], sheet_list[j])
-    #         info = files[i]+"和"+files[j]+"的相同审查内容有-------------------------------------"
-    #         print(info)
-    #         compare(stop_words, lines1, lines2)
+    
+    
+    for i in range(file_num-1):
+        for j in range(i+1, file_num):
+            lines1 = read_excel_file(files[i], sheet_list[i])
+            lines2 = read_excel_file(files[j], sheet_list[j])
+            info = files[i]+"和"+files[j]+"的相同审查内容有-------------------------------------"
+            print(info)
+            compare(stop_words, lines1, lines2)
 
 test()
 
