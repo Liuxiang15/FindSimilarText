@@ -156,7 +156,9 @@ def read_excel_file(file_name, sheet_name_list):
     for sheet_name in sheet_name_list:
         sheet = xl.parse(sheet_name)
         total_items += list(sheet.iloc[:, 2].values)
-    print(total_items)
+        print("sheetname是"+sheet_name+"------------------")
+        for i in list(sheet.iloc[:, 2].values):
+            print(i)
     exists_nan = True
     while exists_nan:
         #除掉所有nan
@@ -165,8 +167,10 @@ def read_excel_file(file_name, sheet_name_list):
                 if isinstance(i, float) and np.isnan(i):
                     exists_nan = True
                     total_items.remove(i)
-    print("total_items是--------------------------")
-    print(total_items)
+    # print("除掉所有nan后的total_items是--------------------------")
+    # for item in total_items:
+    #     print(item)
+    # print(total_items)
     return total_items
 
 

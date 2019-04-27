@@ -1,8 +1,21 @@
 import pandas as pd 
 import numpy as np
-xl = pd.ExcelFile('4-施工图设计质量管控标准-暖通.xlsx')
+import jieba
 
+# xl = pd.ExcelFile('4-施工图设计质量管控标准-暖通.xlsx')
 
+# sentence = ' □    修改设计            □    审查合格'
+# words1 = jieba.cut(sentence.strip())
+# words1 = [word for word in words1]
+# print(words1)
+# stop_words = []
+# with open('stop_words.txt','r',encoding='utf-8') as file:
+#     stop_words = [line.strip() for line in file.readlines()]
+# for word in words1:
+#     if word in stop_words:
+#         words1.remove(word)
+# print("去除停用词后的结果是---------------------")
+# print(words1)
 # print(xl.sheet_names)
 # sheet = xl.parse('1.1建筑')
 # # print(sheet)
@@ -23,8 +36,10 @@ xl = pd.ExcelFile('4-施工图设计质量管控标准-暖通.xlsx')
 # -*- coding: utf-8 -*-   
       
 import os  
-    
+
+
 def file_name(file_dir):   
+    #file_dir为文件夹路径
     file_names = []
     for root, dirs, files in os.walk(file_dir):  
         # print(root) #当前目录路径  
@@ -32,23 +47,29 @@ def file_name(file_dir):
         file_names = files
         # print(files) #当前路径下所有非目录子文件
         # print("----------------------------------------------------------------------")
-    print("所有文件名是：")
-    print(file_names)
-    # legal_file_count = 0
+    
+    legal_file_count = 0
+    
     # for file_name in file_names:
-    #     file_name = file_dir + "/" + file_name
     #     if '~$' in file_name:
+    #         file_names.remove(file_name)        #删除临时文件
     #         print("临时文件名是"+file_name)
     #         continue 
+    #     file_name = file_dir + "/" + file_name
     #     legal_file_count += 1
-    #     print("文件名是"+file_name)
-    #     print("ok1")
-    #     xl = pd.ExcelFile(file_name)
-    #     print("ok2")
-        
-    #     print(xl.sheet_names)
-    #     print("----------------------------------------------------------------------")
-    # print("文件总数为"+str(legal_file_count))
+    file_num = len(file_names)
+    for i in range(file_num):
+        # print(len(file_names))
+        if '~$' in file_names[i]:
+            print("临时文件名是"+file_names[i])
+            file_names.remove(file_names[i])        #删除临时文件
+            continue 
+        file_names[i] = file_dir + "/" + file_names[i]
+        legal_file_count += 1
+    print("文件总数为"+str(legal_file_count))
+    print("所有文件名是：")
+    print(file_names)
+    return file_names
 
 # xl = pd.ExcelFile('总体设计审查要点'+'/'+'10-商业项目施工图审查要点-幕墙.xlsx')
 # print(xl.sheet_names)
