@@ -18,10 +18,15 @@ def get_words_freq(stop_words, sentence1, sentence2):
     #参数：两个文本字符串
     #返回结果：所有词语出现的次数(分别用字典的形式存储)
     #待调参数：var_len = 15  var_sim = 0.1设定两个文本的长度相差var_len以上时相似度为var_sim
-    words1 = jieba.cut(sentence1.strip())
-    words1 = [word for word in words1]
-    words2 = jieba.cut(sentence2.strip())
-    words2 = [word for word in words2]
+    words1= []
+    words2= []
+    try:
+        words1 = jieba.cut(sentence1.strip())
+        words1 = [word for word in words1]
+        words2 = jieba.cut(sentence2.strip())
+        words2 = [word for word in words2]
+    except:
+        print(sentence2)
 
     var_len = 20  
     var_sim = 0.1
@@ -157,14 +162,26 @@ def read_excel_file(file_name, sheet_name_list):
     #根据文件名来读取某个excel文件中的某一个sheet下的内容
     
     xl = pd.ExcelFile(file_name)
-    print(xl.sheet_names)
+    # print(xl.sheet_names)
     total_items = []
     for sheet_name in sheet_name_list:
         sheet = xl.parse(sheet_name)
-        total_items += list(sheet.iloc[:, 2].values)
-        print("sheetname是"+sheet_name+"------------------")
-        for i in list(sheet.iloc[:, 2].values):
-            print(i)
+        # print(sheet.values)
+        # print("0------------------------------------------------------------")
+        # print(sheet.iloc[:, 0].values)
+        # print("1------------------------------------------------------------")
+        # print(sheet.iloc[:, 1].values)
+        # print("2------------------------------------------------------------")
+        # print(sheet.iloc[:, 2].values)
+        # print("3------------------------------------------------------------")
+        # print(sheet.iloc[:, 3].values)
+        if '5-施工图设计质量管控标准-电气' in file_name:
+            total_items += list(sheet.iloc[:, 3].values)
+        else:
+            total_items += list(sheet.iloc[:, 2].values)
+        # print("sheetname是"+sheet_name+"------------------")
+        # for i in list(sheet.iloc[:, 2].values):
+        #     print(i)
     exists_nan = True
     while exists_nan:
         #除掉所有nan
@@ -211,19 +228,6 @@ def compare(stop_words,lines1, lines2):
             print("相似度%f以上的语句有----------------------------"%threshold)
             print(similar_sentences)
 
-def test():
-    file_dir = '总体设计审查要点'
-    files = get_file_names('file_dir')
-    stop_words =  stop_words_list("stop_words.txt")
-    file_num = len(files)
-    append_lines =""
-    for file1 in range(file_num-1):
-        for file2 in range(file1+1, file_num):
-            lines1 = read_txt(files[file1])
-            lines2 = read_txt(files[file2])
-            info = files[file1][:2]+"和"+files[file2][:2]+"的相同审查内容有-------------------------------------"
-            print(info)
-            compare(stop_words, lines1, lines2)
             
         
 def append_lines(file_path, lines):
@@ -243,34 +247,57 @@ def get_file_names(file_dir):
     legal_file_count = 0
     file_num = len(file_names)
     for i in range(file_num):
+        print(file_names[i])
         if '~$' in file_names[i]:
             # print("临时文件名是"+file_names[i])
             file_names.remove(file_names[i])        #删除临时文件
-            continue 
+            continue
         file_names[i] = file_dir + "/" + file_names[i]
         legal_file_count += 1
-    # print("文件总数为"+str(legal_file_count))
-    # print("所有文件名是：")
-    # print(file_names)
+    print("文件总数为"+str(legal_file_count))
+    print("所有文件名是：")
+    print(file_names)
     return file_names
 
-# test()
-sheet_list = [
-    ['1.1建筑'],
-    [ '10.1幕墙'],
-    [ '11.1导向标识'],
-    [ '12.1夜景照明'],
-    [ '2.1试桩、试锚', '2.3土方开挖',  '2.5结构-桩基、抗浮锚杆',  '2.7结构-地下室',  '2.9结构-上部结构',  '2.11结构-幕墙、采光顶',  '2.13结构加固改造',  '2.15地质勘察', '2.16基坑支护及降水'],
-    [ '3.1 给排水'],
-    [ '4.1暖通'],
-    [ '5.1电气'],
-    [ '6.1弱电'],
-    [ '7.1内装'],
-    [ '审查要点'],
-    [ '9.1室外管线综合']
-]
+def test():
+    file_dir = '总体设计审查要点'
+    files = get_file_names(file_dir)
+    stop_words =  stop_words_list("stop_words.txt")
+    file_num = len(files)
+    sheet_list = [
+        ['1.1建筑'],
+        [ '10.1幕墙'],
+        [ '11.1导向标识'],
+        [ '12.1夜景照明'],
+        [ '2.1试桩、试锚', '2.3土方开挖',  '2.5结构-桩基、抗浮锚杆',  '2.7结构-地下室',  '2.9结构-上部结构',  '2.11结构-幕墙、采光顶',  '2.13结构加固改造',  '2.15地质勘察', '2.16基坑支护及降水'],
+        [ '3.1 给排水'],
+        [ '4.1暖通'],
+        [ '5.1电气'],
+        [ '6.1弱电'],
+        [ '7.1内装'],
+        [ '审查要点'],
+        [ '9.1室外管线综合']
+    ]
+    if len(files) != len(sheet_list):
+        print("文件个数和对应的表的个数不一致！！！分别是%d和%d"%(len(files), len(sheet_list)))
+        return
+    
+    # lines1 = read_excel_file('总体设计审查要点/1-商业项目施工图审查要点-建筑.xlsx', sheet_list[0])
+    # print(lines1)
+    lines2 = read_excel_file('总体设计审查要点/5-施工图设计质量管控标准-电气.xlsx', [ '5.1电气'])
+    print(lines2)
+    # compare(stop_words, lines1, lines2)
+    # for i in range(file_num-1):
+    #     for j in range(i+1, file_num):
+    #         lines1 = read_excel_file(files[i], sheet_list[i])
+    #         lines2 = read_excel_file(files[j], sheet_list[j])
+    #         info = files[i]+"和"+files[j]+"的相同审查内容有-------------------------------------"
+    #         print(info)
+    #         compare(stop_words, lines1, lines2)
 
-read_excel_file("总体设计审查要点/2-商业项目施工图审查要点-结构.xlsx", [ '2.1试桩、试锚', '2.3土方开挖',  '2.5结构-桩基、抗浮锚杆',  '2.7结构-地下室',  '2.9结构-上部结构',  '2.11结构-幕墙、采光顶',  '2.13结构加固改造',  '2.15地质勘察', '2.16基坑支护及降水'])
+test()
+
+
 
 
 
