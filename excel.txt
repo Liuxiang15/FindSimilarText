@@ -1,0 +1,79 @@
+[[' ■结构基础' nan nan nan nan nan nan nan nan nan nan]
+ ['项目名称' nan nan nan nan nan '编号' nan nan '时间' nan]
+ ['子项名称' nan nan nan nan nan '一审' nan nan nan '复审']
+ ['部位分项' '序号' '问题 类别' '审查内容' '施工图完成情况评定' '审查说明' '设计院回复' '甲方意见' '审查单位意见'
+  '确认审查意见（有异议时召开评审会），形成一审结论' '复审结果确认']
+ ['1.设计           文件' 1 nan '设计文件是否完整' '□是□否' nan nan nan nan nan nan]
+ [nan '问题类别小计' nan nan nan 'A类问题  个，B类问题   个，C类问题  个，D类问题   个，E类问题 个' nan
+  nan nan nan nan]
+ ['2.总则' 2.1 nan '核查重点部位结构标高、轴线、尺寸与建筑图是否一致' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 2.2 nan '应注明基底（桩端）持力层、抗浮水位、肥槽处理、桩基检测等基础施工必要的注意事项及处理方法' '□是□否□优化'
+  nan nan nan nan nan nan]
+ [nan 2.3 nan '核查有大体积混凝土时的相应技术要求（如水泥品种选用等）' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 2.4 nan '地下室基础设计不考虑消防车荷载组合。' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 2.5 nan '核查后浇带的设置位置合理性，核查后浇带节点做法的合理性' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 2.6 nan '核查地基基础设计等级、桩基设计等级、混凝土结构环境类别等是否正确' '□是□否□优化' nan nan nan
+  nan nan nan]
+ [nan 2.7 nan '核查各部位钢筋等级、混凝土等级、保护层厚度是否合理，选取经济的材料' '□是□否□优化' nan nan nan
+  nan nan nan]
+ [nan 2.8 nan '核查采用机械或焊接接头的最小钢筋直径（要求Φ16及以上）' '□是□否□优化' nan nan nan nan
+  nan nan]
+ [nan 2.9 nan '核查天然基础持力层与勘察报告的吻合情况' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 2.1 nan '对结构基础提出优化建议' '□是□否□优化' nan nan nan nan nan nan]
+ [nan '问题类别小计' nan nan nan 'A类问题  个，B类问题   个，C类问题  个，D类问题   个，E类问题 个' nan
+  nan nan nan nan]
+ ['3.试桩图' 3.1 nan '抗压桩设计应考虑常年水位的有利影响，以节省造价' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 3.2 nan '设计桩型不宜超过3种' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 3.3 nan '抗拔桩设计应考虑桩自重。' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 3.4 nan '检查承压桩、抗拔桩的单桩承载力特征值计算书' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 3.5 nan '桩竖向钢筋宜采用HRB335级，箍筋宜采用HPB300级' '□是□否□优化' nan nan nan nan
+  nan nan]
+ [nan 3.6 nan '桩基砼强度原则上不应超过C40' '□是□否□优化' nan nan nan nan nan nan]
+ [nan nan nan '问题类别小计' nan 'A类问题  个，B类问题   个，C类问题  个，D类问题   个，E类问题 个' nan
+  nan nan nan nan]
+ ['4.基础' 4.1 nan '基础埋深是否合理' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.2 nan '核查重点部位桩顶、承台、底板之间的标高' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.3 nan '桩沿地下室外墙下布置时，如底板厚度满足桩基钢筋锚固要求时，原则上不应设置承台或承台梁' '□是□否□优化' nan
+  nan nan nan nan nan]
+ [nan 4.4 nan '桩和抗浮锚杆不宜同时出现在同一结构单元中' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.5 nan '检查桩基检测的数量是否符合规范规定' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.6 nan '核查天然基础错台关系（一般满足1：2）' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.7 nan '核查底层填充墙是否设计基础' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.8 nan '基础底板应采用高强度钢筋，最小配筋率按0.15%控制' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 4.9 nan '检查地基承载力的深度修正的基础埋深取值是否合理，重点是主楼周边为纯地下车库的情况。' '□是□否□优化' nan
+  nan nan nan nan nan]
+ [nan 4.1 nan '检查天然地基是否存在软弱下卧层及是否核算' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.11 nan '检查基床系数是否合理。' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.12 nan '集水坑及降板做法是否合理' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.13 nan '底板砼强度等级原则上不应超过C40' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.14 nan '筏板应优先采用无梁结构，原则上不应设置暗梁' '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.15 nan '基础梁不考虑抗震设防，箍筋按计算配置，无需加密。' '□是□否□优化' nan nan nan nan nan
+  nan]
+ [nan 4.16 nan '防水板下筋伸入承台或下柱帽内长度满足锚固长度即可，无需贯通。' '□是□否□优化' nan nan nan nan
+  nan nan]
+ [nan 4.17 nan '基础底板不考虑抗震设防，底板上铁锚入支座应为“伸至外墙外侧和15d较大值”，底板上铁锚入支座应为La。'
+  '□是□否□优化' nan nan nan nan nan nan]
+ [nan 4.18000000000001 nan
+  '检查基础底板是否采取拉通与附加的配筋形式（在满足配筋率的前提下，尽量拉通直径较细的钢筋，附加直径较粗的钢筋）' '□是□否□优化' nan
+  nan nan nan nan nan]
+ [nan 4.19000000000001 nan '检查人防底板、顶板的拉结筋是否为规范规定的最小值' '□是□否□优化' nan nan
+  nan nan nan nan]
+ [nan 4.20000000000001 nan '边长>2.5m的独立柱基可考虑下铁钢筋0.9L交错放置。' '□是□否□优化' nan
+  nan nan nan nan nan]
+ [nan 4.21000000000001 nan '核查有没有按照设备要求预留接地措施' '□是□否□优化' nan nan nan nan
+  nan nan]
+ [nan '问题类别小计' nan nan 'A类问题  个，B类问题   个，C类问题  个，D类问题   个，E类问题 个' nan nan
+  nan nan nan nan]
+ ['问题类别总计' nan nan nan 'A类问题  个，B类问题   个，C类问题  个，D类问题   个，E类问题 个' nan nan
+  nan nan nan nan]
+ ['初审结论：' nan ' □    修改设计            □    审查合格' nan nan nan '复审结论:'
+  '□  修改设计     □  审查合格' nan nan nan]
+ ['审查单位：' nan nan nan '审查人：                       电话：' nan '设计修改人：' nan
+  nan '电话：' nan]
+ ['问题类别说明：\n    A类问题：造成安全性问题  B类问题：影响使用功能宜造成业主投诉的问题  C类问题：不符合建造标准的问题  D类问题：违反强制性规范的问题  E类问题：一般性问题'
+  nan nan nan nan nan nan nan nan nan nan]]
