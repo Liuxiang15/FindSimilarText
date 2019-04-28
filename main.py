@@ -99,7 +99,6 @@ def merge_dict_array(dict1, dict2):
     # print(new_dict1)
     # print("new_dict2是：————————————————————————————————————————")
     # print(new_dict2)
-    
     return new_dict1, new_dict2
     
 
@@ -121,6 +120,7 @@ def cal_sim(dict1, dict2):
     sim = cosVector(vector1, vector2)
     # print("相似度是"+str(sim))
     return sim
+
 
 def cosVector(x,y):
     if(len(x)!=len(y)):
@@ -205,22 +205,6 @@ def read_excel_file(file_name, sheet_name_list):
     return total_items
 
 
-def read_txt(file_path):
-    f = open(file_path,"r")   
-    lines = f.readlines()      #读取全部内容 ，并以列表方式返回  
-    for line in lines:  
-        line=line.strip('\n')
-        # print(line)
-    return lines
-
-        # line=line.strip('\n')
-        # if len(line) > 0:
-        #     print (line) 
-        # else:
-        #     lines.remove(line)
-    # with open(file_path, 'w') as f:     # 打开test.txt   如果文件不存在，创建该文件。
-    #     f.write(str(lines))  # 把变量var写入test.txt。这里var必须是str格式，如果不是，则可以转一下。
-
 def compare(stop_words,lines1, lines2):
     #输入：2个字符串数组
     #输出：2个相似得语句集合转化后的字符串
@@ -240,18 +224,11 @@ def compare(stop_words,lines1, lines2):
             print(similar_sentences)
             all_similar_sentences += similar_sentences
     return "\n".join(all_similar_sentences)
-
-
-            
-
-            
         
-def append_lines(file_path, lines):
-    pass
-    #输入:文件路径和
 
 def get_file_names(file_dir):   
     #file_dir为文件夹路径
+    #以列表的形式返回文件夹下所有文件名
     file_names = []
     for root, dirs, files in os.walk(file_dir):  
         # print(root) #当前目录路径  
@@ -277,6 +254,7 @@ def get_file_names(file_dir):
 
 
 def create_excel(file_name, data):
+    #参数：文件名file_name, 列表类型的data
     writer = pd.ExcelWriter(r'文件比较.xlsx')
     '''创建数据框'''
     df1 = pd.DataFrame(data)
@@ -311,17 +289,11 @@ def test():
     excel_data = {}
     excel_data["文件名"] = array(files)
     file_num = len(files)
-    # data_list = [["----"]*12]
-    # data_list = np.zeros((file_num, file_num), dtype=np.string_)
-    # data_list = []*file_num
-    # for i in range(len(file_num)):
-    #     data_list[i] = ["---"]
-    # print(data_list)
+
+    #初始化data_list
     data_list = [[""]*file_num]*file_num
     for i in range(len(data_list)):
         data_list[i] = ["---"]*file_num
-    # for file in files:
-    #     excel_data[file] = array(data_list)
     for i in range(file_num-1):
         for j in range(i+1, file_num):
             lines1 = read_excel_file(files[i], sheet_list[i])
@@ -333,6 +305,8 @@ def test():
     for i in range(len(files)):
         excel_data[files[i]] = array(data_list[i])        
     
+    #新建excel
+    writer = pd.ExcelWriter(r'文件比较汇总.xlsx')
     df1 = pd.DataFrame(excel_data)
     df1.to_excel(writer,sheet_name='相同审查内容',index=False)
     '''数据写出到excel文件中'''
