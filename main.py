@@ -1,5 +1,6 @@
 import jieba
 import numpy as np
+from numpy import *
 import pandas as pd
 
 import math
@@ -28,7 +29,7 @@ def get_words_freq(stop_words, sentence1, sentence2):
     except:
         print(sentence2)
 
-    max_len = max(len(words1) - len(words2))
+    max_len = max(len(words1), len(words2))
     var_len = 0.2
     var_sim = 0.1
     # if abs(len(words1) - len(words2)) > var_len:
@@ -188,8 +189,7 @@ def read_excel_file(file_name, sheet_name_list):
         else:
             total_items += list(sheet.iloc[:, 2].values)
         # print("sheetname是"+sheet_name+"------------------")
-        # for i in list(sheet.iloc[:, 2].values):
-        #     print(i)
+       
     exists_nan = True
     while exists_nan:
         #除掉所有nan
@@ -223,20 +223,26 @@ def read_txt(file_path):
 
 def compare(stop_words,lines1, lines2):
     #输入：2个字符串数组
-    #输出：2个相似得语句集合
+    #输出：2个相似得语句集合转化后的字符串
     lower_bound = 0.7
     upper_bound = 0.99
     order = 1   #统计下标从1开始
+    all_similar_sentences= []
     for line1 in lines1:
         similar_sentences = []
         for line2 in lines2:
             sim = get_words_freq(stop_words,line1, line2)
             if sim > lower_bound and sim < upper_bound:     #排除完全相同的情况
-                similar_sentences.append(line2+"相似率"+str(sim))
+                similar_sentences.append(line2+"(相似率%.3f)"%(round(sim, 3)))  
         if len(similar_sentences) > 0:
             similar_sentences.append(line1)
-            print("相似度%f以上、%f以下的语句有----------------------------"%(lower_bound, upper_bound))
+            print("相似度%.3f以上、%.3f以下的语句有---------"%(lower_bound, upper_bound))
             print(similar_sentences)
+            all_similar_sentences += similar_sentences
+    return "\n".join(all_similar_sentences)
+
+
+            
 
             
         
@@ -257,17 +263,26 @@ def get_file_names(file_dir):
     legal_file_count = 0
     file_num = len(file_names)
     for i in range(file_num):
-        print(file_names[i])
+        # print(file_names[i])
         if '~$' in file_names[i]:
             # print("临时文件名是"+file_names[i])
             file_names.remove(file_names[i])        #删除临时文件
             continue
         file_names[i] = file_dir + "/" + file_names[i]
         legal_file_count += 1
-    print("文件总数为"+str(legal_file_count))
-    print("所有文件名是：")
-    print(file_names)
+    # print("文件总数为"+str(legal_file_count))
+    # print("所有文件名是：")
+    # print(file_names)
     return file_names
+
+
+def create_excel(file_name, data):
+    writer = pd.ExcelWriter(r'文件比较.xlsx')
+    '''创建数据框'''
+    df1 = pd.DataFrame(data)
+    df1.to_excel(writer,sheet_name='文件比较',index=False)
+    '''数据写出到excel文件中'''
+    writer.save()
 
 def test():
     file_dir = '总体设计审查要点'
@@ -292,15 +307,36 @@ def test():
         print("文件个数和对应的表的个数不一致！！！分别是%d和%d"%(len(files), len(sheet_list)))
         return
     
-    
-    
+    #excel_data初始化
+    excel_data = {}
+    excel_data["文件名"] = array(files)
+    file_num = len(files)
+    # data_list = [["----"]*12]
+    # data_list = np.zeros((file_num, file_num), dtype=np.string_)
+    # data_list = []*file_num
+    # for i in range(len(file_num)):
+    #     data_list[i] = ["---"]
+    # print(data_list)
+    data_list = [[""]*file_num]*file_num
+    for i in range(len(data_list)):
+        data_list[i] = ["---"]*file_num
+    # for file in files:
+    #     excel_data[file] = array(data_list)
     for i in range(file_num-1):
         for j in range(i+1, file_num):
             lines1 = read_excel_file(files[i], sheet_list[i])
             lines2 = read_excel_file(files[j], sheet_list[j])
             info = files[i]+"和"+files[j]+"的相同审查内容有-------------------------------------"
             print(info)
-            compare(stop_words, lines1, lines2)
+            all_sim_sentences = compare(stop_words, lines1, lines2) #使用compare函数实现文件比较内容的获取
+            data_list[i][j] = all_sim_sentences
+    for i in range(len(files)):
+        excel_data[files[i]] = array(data_list[i])        
+    
+    df1 = pd.DataFrame(excel_data)
+    df1.to_excel(writer,sheet_name='相同审查内容',index=False)
+    '''数据写出到excel文件中'''
+    writer.save()
 
 test()
 

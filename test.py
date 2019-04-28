@@ -1,89 +1,54 @@
-import pandas as pd 
-import numpy as np
-import jieba
+# import pandas as pd
+# import numpy as np
+# from numpy import *
+# writer = pd.ExcelWriter(r'demo1.xlsx')
+# files=['1-商业项目施工图审查要点-建筑.xlsx', '10-商业项目施工图审查要点-幕墙.xlsx', '11-商业项目施工图审查要点-导向标识.xlsx', '12-商业项目施工图审查要点-夜景照明.xlsx', '2-商业项目施工图审查要点-结构.xlsx', 
+# '3-施工图设计质量管控标准-给排水.xlsx', '4-施工图设计质量管控标准-暖通.xlsx', '5-施工图设计质量管控标准-电气.xlsx', '6-施工图设计质量管控标准-弱电.xlsx', '7-商业项目施工图审查要点-内装.xlsx', '8-商业项目施工图审查要点-景观.xlsx', 
+# '9-施工图设计质量管控标准-室外管线.xlsx']
+# data = {}
+# data["文件名"] = array(files)
+# data_list = ["----------------"]*12
+# for file in files:
+#     data[file] = array(data_list)
+# '''创建数据框1'''
+# # df1 = pd.DataFrame({'V1':np.random.rand(3),
+# #                     'V2 ':np.random.rand(3),
+# #                     'V3':np.random.rand(3)})
+# df1 = pd.DataFrame(data)
+# df1.to_excel(writer,sheet_name='sheet1',index=False)
 
-# xl = pd.ExcelFile('4-施工图设计质量管控标准-暖通.xlsx')
+# # '''创建数据框2'''
+# # df2 = pd.DataFrame({'V1':np.random.rand(3),
+# #                     'V2 ':np.random.rand(3),
+# #                     'V3':np.random.rand(3)})
+# # df2.to_excel(writer,sheet_name='sheet2',index=False)
 
-# sentence = ' □    修改设计            □    审查合格'
-# words1 = jieba.cut(sentence.strip())
-# words1 = [word for word in words1]
-# print(words1)
-# stop_words = []
-# with open('stop_words.txt','r',encoding='utf-8') as file:
-#     stop_words = [line.strip() for line in file.readlines()]
-# for word in words1:
-#     if word in stop_words:
-#         words1.remove(word)
-# print("去除停用词后的结果是---------------------")
-# print(words1)
-# print(xl.sheet_names)
-# sheet = xl.parse('1.1建筑')
-# # print(sheet)
-# sheet_list = list(sheet.iloc[:, 2].values)
-# # print(sheet_list)
-# exists_nan = True
-# while exists_nan:
-#     #除掉所有nan
-#     exists_nan = False
-#     for i in sheet_list:
-#             if isinstance(i, float) and np.isnan(i):
-#                 exists_nan = True
-#                 sheet_list.remove(i)
+# # '''创建数据框3'''
+# # df3 = pd.DataFrame({'V1':np.random.rand(3),
+# #                     'V2 ':np.random.rand(3),
+# #                     'V3':np.random.rand(3)})
+# # df3.to_excel(writer,sheet_name='sheet3',index=False)
 
+# '''数据写出到excel文件中'''
+# writer.save()
+# # sim = 67.34235
+# # a = "(相似率%.3f)"%(round(sim, 3))
+# # print(a)
+# # print(str(a))
+# # a=['1-商业项目施工图审查要点-建筑.xlsx', '10-商业项目施工图审查要点-幕墙.xlsx', '11-商业项目施工图审查要点-导向标识.xlsx', '12-商业项目施工图审查要点-夜景照明.xlsx', '2-商业项目施工图审查要点-结构.xlsx', 
+# # '3-施工图设计质量管控标准-给排水.xlsx', '4-施工图设计质量管控标准-暖通.xlsx', '5-施工图设计质量管控标准-电气.xlsx', '6-施工图设计质量管控标准-弱电.xlsx', '7-商业项目施工图审查要点-内装.xlsx', '8-商业项目施工图审查要点-景观.xlsx', 
+# # '9-施工图设计质量管控标准-室外管线.xlsx']
+# # ['总体设计审查要点/1-商业项目施工图审查要点-建筑.xlsx', '总体设计审查要点/10-商业项目施工图审查要点-幕墙.xlsx', '总体设计审查要点/11-商业项目施工图审查要点-导向标识.xlsx', '总体设计审查要点/12-商业项目施工图审查要点-夜景照明.xlsx', '总体设计审查要点/2-商业项目施工图审查要点-结构.xlsx', '总体设计审查要点/3-施工图设计质量管
+# # 控标准-给排水.xlsx', '总体设计审查要点/4-施工图设计质量管控标准-暖通.xlsx', '总体设计审查要点/5-施工图设计质量管控标准-电气.xlsx', '总体设计审查要点/6-施工图设计
+# # 质量管控标准-弱电.xlsx', '总体设计审查要点/7-商业项目施工图审查要点-内装.xlsx', '总体设计审查要点/8-商业项目施工图审查要点-景观.xlsx', '总体设计审查要点/9-施工图
+# # 设计质量管控标准-室外管线.xlsx']
 
-# print(sheet_list)
-
-# -*- coding: utf-8 -*-   
-      
-import os  
-
-
-def file_name(file_dir):   
-    #file_dir为文件夹路径
-    file_names = []
-    for root, dirs, files in os.walk(file_dir):  
-        # print(root) #当前目录路径  
-        # print(dirs) #当前路径下所有子目录  
-        file_names = files
-        # print(files) #当前路径下所有非目录子文件
-        # print("----------------------------------------------------------------------")
+file_num = 5
+data_list = [[""]*file_num]*file_num
+print
+for i in range(len(data_list)):
+    data_list[i] = ["---"]*file_num
     
-    legal_file_count = 0
-    
-    # for file_name in file_names:
-    #     if '~$' in file_name:
-    #         file_names.remove(file_name)        #删除临时文件
-    #         print("临时文件名是"+file_name)
-    #         continue 
-    #     file_name = file_dir + "/" + file_name
-    #     legal_file_count += 1
-    file_num = len(file_names)
-    for i in range(file_num):
-        if '~$' in file_names[i]:
-            # print("临时文件名是"+file_names[i])
-            file_names.remove(file_names[i])        #删除临时文件
-            continue 
-        file_names[i] = file_dir + "/" + file_names[i]
-        legal_file_count += 1
-    # print("文件总数为"+str(legal_file_count))
-    # print("所有文件名是：")
-    # print(file_names)
-    return file_names
-
-# xl = pd.ExcelFile('总体设计审查要点'+'/'+'10-商业项目施工图审查要点-幕墙.xlsx')
-# print(xl.sheet_names)
-sheet_list = [
-    ['1.1建筑'],
-    [ '10.1幕墙'],
-    [ '11.1导向标识'],
-    [ '12.1夜景照明'],
-    [ '2.1试桩、试锚', '2.3土方开挖',  '2.5结构-桩基、抗浮锚杆',  '2.7结构-地下室',  '2.9 结构-上部结构',  '2.11结构-幕墙、采光顶',  '2.13结构加固改造',  '2.15地质勘察', '2.16基坑支护及降水'],
-    [ '3.1 给排水'],
-    [ '4.1暖通'],
-    [ '5.1电气'],
-    [ '6.1弱电'],
-    [ '7.1内装'],
-    [ '审查要点'],
-    [ '9.1室外管线综合']
-]
-file_name('总体设计审查要点')
+print(data_list)
+data_list[2][3] = "fffffffffffff"
+print(data_list)
