@@ -1,3 +1,11 @@
+# import sys
+# print ("脚本名：", sys.argv[0])
+# for i in range(1, len(sys.argv)):
+#     print ("参数", i, sys.argv[i])
+f = open("foo.txt")               # 返回一个文件对象   
+line = f.readline()               # 调用文件的 readline()方法 
+print(line)
+
 # import pandas as pd
 # import numpy as np
 # from numpy import *
@@ -43,12 +51,3 @@
 # # 质量管控标准-弱电.xlsx', '总体设计审查要点/7-商业项目施工图审查要点-内装.xlsx', '总体设计审查要点/8-商业项目施工图审查要点-景观.xlsx', '总体设计审查要点/9-施工图
 # # 设计质量管控标准-室外管线.xlsx']
 
-file_num = 5
-data_list = [[""]*file_num]*file_num
-print
-for i in range(len(data_list)):
-    data_list[i] = ["---"]*file_num
-    
-print(data_list)
-data_list[2][3] = "fffffffffffff"
-print(data_list)

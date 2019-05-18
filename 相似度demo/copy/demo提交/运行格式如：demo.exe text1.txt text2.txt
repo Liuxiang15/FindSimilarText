@@ -1,0 +1,3 @@
+运行格式如：demo.exe file1 file2
+输出格式：两个文本的相似度是%f：
+注意：stop_words.txt与demo.exe同级目录，不能变动！！！

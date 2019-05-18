@@ -1,0 +1,2 @@
+运行格式如：demo.exe text1.txt text2.txt
+输出格式：两个文本的相似度是%f：
